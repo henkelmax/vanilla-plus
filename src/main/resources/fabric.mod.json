@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "vanillaplus",
+  "version": "${version}",
+  "name": "VanillaPlus",
+  "description": "Vanilla Plus",
+  "authors": [
+    "Max Henkel"
+  ],
+  "contact": {
+    "website": "https://modrepo.de"
+  },
+  "license": "All Rights Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "de.maxhenkel.vanillaplus.VanillaPlus"
+    ]
+  },
+  "mixins": [
+    "vanillaplus.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": ">=${fabric_version}",
+    "minecraft": "${minecraft_dependency}",
+    "java": ">=16"
+  }
+}
