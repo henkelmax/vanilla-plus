@@ -11,6 +11,7 @@ public class ServerConfig {
     public final ConfigEntry<Boolean> endermanPickUpBlocks;
     public final ConfigEntry<Boolean> cropTrampling;
     public final ConfigEntry<Boolean> controlledRaids;
+    public final ConfigEntry<Boolean> newElytraDurability;
 
     public ServerConfig(ConfigBuilder builder) {
         leashVillagers = builder.booleanEntry("leash_villagers", true);
@@ -19,6 +20,7 @@ public class ServerConfig {
         endermanPickUpBlocks = builder.booleanEntry("enderman_pick_up_blocks", false);
         cropTrampling = builder.booleanEntry("crop_trampling", false);
         controlledRaids = builder.booleanEntry("controlled_raids", true);
+        newElytraDurability = builder.booleanEntry("new_elytra_durability", true);
     }
 
 }

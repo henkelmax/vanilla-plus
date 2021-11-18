@@ -10,7 +10,9 @@
     "EnderManMixin",
     "FarmBlockMixin",
     "BadOmenMobEffectMixin",
-    "AbilitiesMixin"
+    "AbilitiesMixin",
+    "LivingEntityMixin",
+    "FireworkRocketItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1
