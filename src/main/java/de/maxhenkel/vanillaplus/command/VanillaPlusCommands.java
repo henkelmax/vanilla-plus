@@ -4,14 +4,15 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import de.maxhenkel.vanillaplus.VanillaPlusAbilities;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
 public class VanillaPlusCommands {
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, boolean dedicated) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registryAccess, Commands.CommandSelection environment) {
         LiteralArgumentBuilder<CommandSourceStack> literalBuilder = Commands.literal("vanillaplus");
 
         literalBuilder.then(Commands.literal("raids").then(Commands.argument("enabled", BoolArgumentType.bool()).executes((context) -> {
@@ -19,9 +20,9 @@ public class VanillaPlusCommands {
             boolean enabled = BoolArgumentType.getBool(context, "enabled");
             ((VanillaPlusAbilities) player.getAbilities()).setCanTriggerRaids(enabled);
             if (enabled) {
-                context.getSource().sendSuccess(new TextComponent("Successfully enabled raids for ").append(player.getDisplayName()), false);
+                context.getSource().sendSuccess(Component.translatable("Successfully enabled raids for ").append(player.getDisplayName()), false);
             } else {
-                context.getSource().sendSuccess(new TextComponent("Successfully disabled raids for ").append(player.getDisplayName()), false);
+                context.getSource().sendSuccess(Component.translatable("Successfully disabled raids for ").append(player.getDisplayName()), false);
             }
             return 1;
         })));
@@ -29,9 +30,9 @@ public class VanillaPlusCommands {
         literalBuilder.then(Commands.literal("raids").executes((context) -> {
             ServerPlayer player = context.getSource().getPlayerOrException();
             if (((VanillaPlusAbilities) player.getAbilities()).canTriggerRaids()) {
-                context.getSource().sendSuccess(new TextComponent("Raids are enabled for ").append(player.getDisplayName()), false);
+                context.getSource().sendSuccess(Component.translatable("Raids are enabled for ").append(player.getDisplayName()), false);
             } else {
-                context.getSource().sendSuccess(new TextComponent("Raids are disabled for ").append(player.getDisplayName()), false);
+                context.getSource().sendSuccess(Component.translatable("Raids are disabled for ").append(player.getDisplayName()), false);
             }
             return 1;
         }));
