@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(Creeper.class)
 public class CreeperMixin {
 
-    @Redirect(method = "explodeCreeper", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;explode(Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Explosion$BlockInteraction;)Lnet/minecraft/world/level/Explosion;", ordinal = 0))
-    private Explosion explodeCreeper(Level level, @Nullable Entity entity, double x, double y, double z, float strength, Explosion.BlockInteraction blockInteraction) {
+    @Redirect(method = "explodeCreeper", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;explode(Lnet/minecraft/world/entity/Entity;DDDFLnet/minecraft/world/level/Level$ExplosionInteraction;)Lnet/minecraft/world/level/Explosion;", ordinal = 0))
+    private Explosion explodeCreeper(Level level, @Nullable Entity entity, double x, double y, double z, float strength, Level.ExplosionInteraction explosionInteraction) {
         if (VanillaPlus.SERVER_CONFIG.creeperBlockDamage.get()) {
-            return level.explode(entity, x, y, z, strength, blockInteraction);
+            return level.explode(entity, x, y, z, strength, explosionInteraction);
         } else {
-            return level.explode(entity, x, y, z, strength, Explosion.BlockInteraction.NONE);
+            return level.explode(entity, x, y, z, strength, Level.ExplosionInteraction.NONE);
         }
     }
 
