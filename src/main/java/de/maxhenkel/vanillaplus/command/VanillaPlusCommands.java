@@ -20,9 +20,9 @@ public class VanillaPlusCommands {
             boolean enabled = BoolArgumentType.getBool(context, "enabled");
             ((VanillaPlusAbilities) player.getAbilities()).setCanTriggerRaids(enabled);
             if (enabled) {
-                context.getSource().sendSuccess(Component.translatable("Successfully enabled raids for ").append(player.getDisplayName()), false);
+                context.getSource().sendSuccess(() -> Component.literal("Successfully enabled raids for ").append(player.getDisplayName()), false);
             } else {
-                context.getSource().sendSuccess(Component.translatable("Successfully disabled raids for ").append(player.getDisplayName()), false);
+                context.getSource().sendSuccess(() -> Component.literal("Successfully disabled raids for ").append(player.getDisplayName()), false);
             }
             return 1;
         })));
@@ -30,9 +30,9 @@ public class VanillaPlusCommands {
         literalBuilder.then(Commands.literal("raids").executes((context) -> {
             ServerPlayer player = context.getSource().getPlayerOrException();
             if (((VanillaPlusAbilities) player.getAbilities()).canTriggerRaids()) {
-                context.getSource().sendSuccess(Component.translatable("Raids are enabled for ").append(player.getDisplayName()), false);
+                context.getSource().sendSuccess(() -> Component.literal("Raids are enabled for ").append(player.getDisplayName()), false);
             } else {
-                context.getSource().sendSuccess(Component.translatable("Raids are disabled for ").append(player.getDisplayName()), false);
+                context.getSource().sendSuccess(() -> Component.literal("Raids are disabled for ").append(player.getDisplayName()), false);
             }
             return 1;
         }));
