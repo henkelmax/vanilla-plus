@@ -9,7 +9,7 @@
     "CreeperMixin",
     "EnderManMixin",
     "FarmBlockMixin",
-    "BadOmenMobEffectMixin",
+    "RaidsMixin",
     "AbilitiesMixin",
     "LivingEntityMixin",
     "FireworkRocketItemMixin"
