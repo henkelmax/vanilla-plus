@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "vanillaplus",
-  "version": "${version}",
+  "version": "${mod_version}",
   "name": "VanillaPlus",
   "description": "Vanilla Plus",
   "authors": [
@@ -21,9 +21,8 @@
     "vanillaplus.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=${loader_version}",
-    "fabric": ">=${fabric_version}",
-    "minecraft": "${minecraft_dependency}",
-    "java": ">=17"
+    "fabricloader": "${fabric_loader_dependency}",
+    "fabric-api": "${fabric_api_dependency}",
+    "minecraft": "${minecraft_dependency}"
   }
 }

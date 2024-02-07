@@ -1,69 +1,15 @@
 plugins {
-    id 'fabric-loom' version '1.2-SNAPSHOT'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'com.github.johnrengelman.shadow' version "${shadow_version}"
+    id 'fabric-loom' version "${fabric_loom_version}"
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url = 'https://maven.fabricmc.net/' }
-    maven { url = 'https://maven.maxhenkel.de/repository/public' }
-}
-
-runClient.doFirst {
-    args = ['--username', "henkelmax${new Random().nextInt(1000)}"]
-}
-
-dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-    implementation 'com.google.code.findbugs:jsr305:3.0.2'
-
-    implementation "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
-    shadow "de.maxhenkel.configbuilder:configbuilder:${configbuilder_version}"
-}
+apply from: "https://raw.githubusercontent.com/henkelmax/mod-gradle-scripts/${mod_gradle_script_version}/mod.gradle"
 
 processResources {
     filesMatching('fabric.mod.json') {
-        expand 'version': project.version,
-                'minecraft_dependency': project.minecraft_dependency,
-                'loader_version': project.loader_version,
-                'fabric_version': project.fabric_version
+        expand 'mod_version': mod_version,
+                'minecraft_dependency': minecraft_dependency,
+                'fabric_loader_dependency': fabric_loader_dependency,
+                'fabric_api_dependency': fabric_api_dependency
     }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    it.options.encoding = 'UTF-8'
-    it.options.release = 17
-}
-
-java {
-    withSourcesJar()
-}
-
-jar {
-    from('LICENSE') {
-        rename { "${it}_${project.archivesBaseName}" }
-    }
-}
-
-shadowJar {
-    configurations = [project.configurations.shadow]
-    archiveClassifier = 'shadow-dev'
-    relocate 'de.maxhenkel.configbuilder', "de.maxhenkel.${mod_id}.configbuilder"
-}
-
-remapJar {
-    dependsOn shadowJar
-    inputFile = shadowJar.archiveFile.get()
 }

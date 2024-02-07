@@ -19,7 +19,7 @@ public class VanillaPlus implements ModInitializer {
     public void onInitialize() {
         CommandRegistrationCallback.EVENT.register(VanillaPlusCommands::register);
         ServerLifecycleEvents.SERVER_STARTING.register(server -> {
-            SERVER_CONFIG = ConfigBuilder.build(server.getServerDirectory().toPath().resolve("config").resolve(MODID).resolve("vanillaplus-server.properties"), ServerConfig::new);
+            SERVER_CONFIG = ConfigBuilder.builder(ServerConfig::new).path(server.getServerDirectory().toPath().resolve("config").resolve(MODID).resolve("vanillaplus-server.properties")).build();
         });
     }
 }
