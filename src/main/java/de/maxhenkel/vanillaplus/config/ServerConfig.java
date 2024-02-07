@@ -20,7 +20,7 @@ public class ServerConfig {
         endermanPickUpBlocks = builder.booleanEntry("enderman_pick_up_blocks", false);
         cropTrampling = builder.booleanEntry("crop_trampling", false);
         controlledRaids = builder.booleanEntry("controlled_raids", true);
-        newElytraDurability = builder.booleanEntry("new_elytra_durability", true);
+        newElytraDurability = builder.booleanEntry("new_elytra_durability", false);
     }
 
 }
