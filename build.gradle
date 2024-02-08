@@ -13,3 +13,7 @@ processResources {
                 'fabric_api_dependency': fabric_api_dependency
     }
 }
+
+dependencies {
+    include(modImplementation("maven.modrinth:admiral:${admiral_version}+fabric"))
+}

@@ -1,43 +1,36 @@
 package de.maxhenkel.vanillaplus.command;
 
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.BoolArgumentType;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import de.maxhenkel.admiral.annotations.Command;
+import de.maxhenkel.admiral.annotations.Name;
 import de.maxhenkel.vanillaplus.VanillaPlusAbilities;
-import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 
+@Command("vanillaplus")
 public class VanillaPlusCommands {
 
-    public static void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registryAccess, Commands.CommandSelection environment) {
-        LiteralArgumentBuilder<CommandSourceStack> literalBuilder = Commands.literal("vanillaplus");
+    @Command("raids")
+    public void raids(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
+        ServerPlayer player = context.getSource().getPlayerOrException();
+        if (((VanillaPlusAbilities) player.getAbilities()).canTriggerRaids()) {
+            context.getSource().sendSuccess(() -> Component.literal("Raids are enabled for ").append(player.getDisplayName()), false);
+        } else {
+            context.getSource().sendSuccess(() -> Component.literal("Raids are disabled for ").append(player.getDisplayName()), false);
+        }
+    }
 
-        literalBuilder.then(Commands.literal("raids").then(Commands.argument("enabled", BoolArgumentType.bool()).executes((context) -> {
-            ServerPlayer player = context.getSource().getPlayerOrException();
-            boolean enabled = BoolArgumentType.getBool(context, "enabled");
-            ((VanillaPlusAbilities) player.getAbilities()).setCanTriggerRaids(enabled);
-            if (enabled) {
-                context.getSource().sendSuccess(() -> Component.literal("Successfully enabled raids for ").append(player.getDisplayName()), false);
-            } else {
-                context.getSource().sendSuccess(() -> Component.literal("Successfully disabled raids for ").append(player.getDisplayName()), false);
-            }
-            return 1;
-        })));
-
-        literalBuilder.then(Commands.literal("raids").executes((context) -> {
-            ServerPlayer player = context.getSource().getPlayerOrException();
-            if (((VanillaPlusAbilities) player.getAbilities()).canTriggerRaids()) {
-                context.getSource().sendSuccess(() -> Component.literal("Raids are enabled for ").append(player.getDisplayName()), false);
-            } else {
-                context.getSource().sendSuccess(() -> Component.literal("Raids are disabled for ").append(player.getDisplayName()), false);
-            }
-            return 1;
-        }));
-
-        dispatcher.register(literalBuilder);
+    @Command("raids")
+    public void raids(CommandContext<CommandSourceStack> context, @Name("enabled") boolean enabled) throws CommandSyntaxException {
+        ServerPlayer player = context.getSource().getPlayerOrException();
+        ((VanillaPlusAbilities) player.getAbilities()).setCanTriggerRaids(enabled);
+        if (enabled) {
+            context.getSource().sendSuccess(() -> Component.literal("Successfully enabled raids for ").append(player.getDisplayName()), false);
+        } else {
+            context.getSource().sendSuccess(() -> Component.literal("Successfully disabled raids for ").append(player.getDisplayName()), false);
+        }
     }
 
 }
