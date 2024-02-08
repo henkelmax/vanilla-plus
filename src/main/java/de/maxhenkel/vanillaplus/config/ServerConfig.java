@@ -12,6 +12,7 @@ public class ServerConfig {
     public final ConfigEntry<Boolean> cropTrampling;
     public final ConfigEntry<Boolean> controlledRaids;
     public final ConfigEntry<Boolean> newElytraDurability;
+    public final ConfigEntry<Boolean> interactionCommands;
 
     public ServerConfig(ConfigBuilder builder) {
         leashVillagers = builder.booleanEntry("leash_villagers", true);
@@ -21,6 +22,7 @@ public class ServerConfig {
         cropTrampling = builder.booleanEntry("crop_trampling", false);
         controlledRaids = builder.booleanEntry("controlled_raids", true);
         newElytraDurability = builder.booleanEntry("new_elytra_durability", false);
+        interactionCommands = builder.booleanEntry("interaction_commands", false);
     }
 
 }

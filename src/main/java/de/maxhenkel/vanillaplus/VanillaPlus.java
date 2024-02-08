@@ -2,10 +2,12 @@ package de.maxhenkel.vanillaplus;
 
 import de.maxhenkel.admiral.MinecraftAdmiral;
 import de.maxhenkel.configbuilder.ConfigBuilder;
+import de.maxhenkel.vanillaplus.command.InteractionCommands;
 import de.maxhenkel.vanillaplus.command.VanillaPlusCommands;
 import de.maxhenkel.vanillaplus.config.ServerConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.commands.CommandSourceStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,9 +26,16 @@ public class VanillaPlus implements ModInitializer {
         SERVER_CONFIG = ConfigBuilder.builder(ServerConfig::new).path(configFolder.resolve("vanillaplus-server.properties")).build();
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            MinecraftAdmiral.builder(dispatcher, registryAccess)
-                    .addCommandClasses(VanillaPlusCommands.class)
-                    .build();
+            MinecraftAdmiral.Builder<CommandSourceStack> builder = MinecraftAdmiral.builder(dispatcher, registryAccess);
+            builder.addCommandClasses(VanillaPlusCommands.class);
+            if (VanillaPlus.SERVER_CONFIG.interactionCommands.get()) {
+                builder.addCommandClasses(InteractionCommands.class);
+            }
+            builder.build();
         });
+
+        if (VanillaPlus.SERVER_CONFIG.interactionCommands.get()) {
+            InteractionManager.init();
+        }
     }
 }
