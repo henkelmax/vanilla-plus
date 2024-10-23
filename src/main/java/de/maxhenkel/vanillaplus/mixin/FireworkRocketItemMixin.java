@@ -1,8 +1,7 @@
 package de.maxhenkel.vanillaplus.mixin;
 
 import de.maxhenkel.vanillaplus.VanillaPlus;
-import net.fabricmc.fabric.api.util.NbtType;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -11,6 +10,7 @@ import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.FireworkRocketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.Fireworks;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -39,12 +39,9 @@ public class FireworkRocketItemMixin extends Item {
 
         int amount = 1;
 
-        CompoundTag tag = item.getTag();
-        if (tag != null && tag.contains(FireworkRocketItem.TAG_FIREWORKS, NbtType.COMPOUND)) {
-            CompoundTag fireworks = tag.getCompound(FireworkRocketItem.TAG_FIREWORKS);
-            if (fireworks.contains(FireworkRocketItem.TAG_FLIGHT, NbtType.NUMBER)) {
-                amount = fireworks.getByte(FireworkRocketItem.TAG_FLIGHT);
-            }
+        Fireworks fireworksComponent = item.get(DataComponents.FIREWORKS);
+        if (fireworksComponent != null) {
+            amount = fireworksComponent.flightDuration();
         }
 
         ItemStack elytra = player.getItemBySlot(EquipmentSlot.CHEST);
@@ -60,7 +57,7 @@ public class FireworkRocketItemMixin extends Item {
         }
 
         int maxDamage = Math.min(amount, durability - MIN_DURABILITY);
-        elytra.hurtAndBreak(maxDamage, player, e -> e.broadcastBreakEvent(EquipmentSlot.CHEST));
+        elytra.hurtAndBreak(maxDamage, player, EquipmentSlot.CHEST);
     }
 
 }

@@ -5,8 +5,7 @@ import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
@@ -51,9 +50,8 @@ public class InteractionManager {
     }
 
     private static Optional<Entity> lookingAt(ServerPlayer player) {
-        Level level = player.level();
-        double reachDistance = Player.getPickRange(player.gameMode.isCreative());
-        return level.getEntities(player, player.getBoundingBox().inflate(reachDistance)).stream().filter(entity -> intersectsLook(player, entity, reachDistance)).min(Comparator.comparingDouble(o -> o.distanceTo(player)));
+        double reachDistance = player.getAttributeValue(Attributes.ENTITY_INTERACTION_RANGE);
+        return player.level().getEntities(player, player.getBoundingBox().inflate(reachDistance)).stream().filter(entity -> intersectsLook(player, entity, reachDistance)).min(Comparator.comparingDouble(o -> o.distanceTo(player)));
     }
 
     private static boolean intersectsLook(ServerPlayer player, Entity entity, double reachDistance) {

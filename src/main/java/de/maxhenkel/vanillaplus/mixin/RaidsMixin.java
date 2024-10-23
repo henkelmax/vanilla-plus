@@ -2,6 +2,7 @@ package de.maxhenkel.vanillaplus.mixin;
 
 import de.maxhenkel.vanillaplus.VanillaPlus;
 import de.maxhenkel.vanillaplus.VanillaPlusAbilities;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.entity.raid.Raids;
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class RaidsMixin {
 
     @Inject(method = "createOrExtendRaid", at = @At(value = "HEAD"), cancellable = true)
-    private void createOrExtendRaid(ServerPlayer serverPlayer, CallbackInfoReturnable<Raid> cir) {
+    private void createOrExtendRaid(ServerPlayer serverPlayer, BlockPos blockPos, CallbackInfoReturnable<Raid> cir) {
         if (!VanillaPlus.SERVER_CONFIG.controlledRaids.get()) {
             return;
         }
