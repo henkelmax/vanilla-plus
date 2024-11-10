@@ -10,7 +10,6 @@ public class ServerConfig {
     public final ConfigEntry<Boolean> creeperBlockDamage;
     public final ConfigEntry<Boolean> endermanPickUpBlocks;
     public final ConfigEntry<Boolean> cropTrampling;
-    public final ConfigEntry<Boolean> controlledRaids;
     public final ConfigEntry<Boolean> newElytraDurability;
     public final ConfigEntry<Boolean> interactionCommands;
 
@@ -20,7 +19,6 @@ public class ServerConfig {
         creeperBlockDamage = builder.booleanEntry("creeper_block_damage", false);
         endermanPickUpBlocks = builder.booleanEntry("enderman_pick_up_blocks", false);
         cropTrampling = builder.booleanEntry("crop_trampling", false);
-        controlledRaids = builder.booleanEntry("controlled_raids", true);
         newElytraDurability = builder.booleanEntry("new_elytra_durability", false);
         interactionCommands = builder.booleanEntry("interaction_commands", false);
     }

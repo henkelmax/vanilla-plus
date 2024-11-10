@@ -3,7 +3,6 @@ package de.maxhenkel.vanillaplus;
 import de.maxhenkel.admiral.MinecraftAdmiral;
 import de.maxhenkel.configbuilder.ConfigBuilder;
 import de.maxhenkel.vanillaplus.command.InteractionCommands;
-import de.maxhenkel.vanillaplus.command.VanillaPlusCommands;
 import de.maxhenkel.vanillaplus.config.ServerConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -27,7 +26,6 @@ public class VanillaPlus implements ModInitializer {
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
             MinecraftAdmiral.Builder<CommandSourceStack> builder = MinecraftAdmiral.builder(dispatcher, registryAccess);
-            builder.addCommandClasses(VanillaPlusCommands.class);
             if (VanillaPlus.SERVER_CONFIG.interactionCommands.get()) {
                 builder.addCommandClasses(InteractionCommands.class);
             }
