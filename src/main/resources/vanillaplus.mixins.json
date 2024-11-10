@@ -9,9 +9,10 @@
     "EnderManMixin",
     "FarmBlockMixin",
     "FireworkRocketItemMixin",
+    "InventoryMixin",
+    "ItemEntityMixin",
     "LivingEntityMixin",
-    "PhantomMixin",
-    "InventoryMixin"
+    "PhantomMixin"
   ],
   "injectors": {
     "defaultRequire": 1
