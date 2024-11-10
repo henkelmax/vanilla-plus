@@ -1,1 +1,1 @@
-- Removed controlled raids option
+- Added protect death items config option

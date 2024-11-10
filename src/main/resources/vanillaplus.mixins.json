@@ -5,12 +5,13 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AbstractVillagerMixin",
-    "PhantomMixin",
     "CreeperMixin",
     "EnderManMixin",
     "FarmBlockMixin",
+    "FireworkRocketItemMixin",
     "LivingEntityMixin",
-    "FireworkRocketItemMixin"
+    "PhantomMixin",
+    "InventoryMixin"
   ],
   "injectors": {
     "defaultRequire": 1
