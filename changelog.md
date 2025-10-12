@@ -1,1 +1,1 @@
-- Added protect death items config option
+- Updated to 1.21.10

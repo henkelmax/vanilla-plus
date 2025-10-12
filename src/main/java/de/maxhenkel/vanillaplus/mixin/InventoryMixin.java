@@ -23,8 +23,8 @@ public class InventoryMixin {
             return null;
         }
         Vec3 pos = dropped.position();
-        if (pos.y() < dropped.level().getMinBuildHeight() + 1D) {
-            dropped.setPos(pos.x(), dropped.level().getMinBuildHeight() + 1D, pos.z());
+        if (pos.y() < dropped.level().getMinY() + 1D) {
+            dropped.setPos(pos.x(), dropped.level().getMinY() + 1D, pos.z());
         }
         dropped.setInvulnerable(true);
         dropped.setUnlimitedLifetime();

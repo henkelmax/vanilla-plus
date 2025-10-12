@@ -26,7 +26,7 @@ public abstract class ItemEntityMixin extends Entity {
             return;
         }
 
-        int minY = level().getMinBuildHeight();
+        int minY = level().getMinY();
         if (y < minY + 1D) {
             y = minY + 1D;
             setNoGravity(true);

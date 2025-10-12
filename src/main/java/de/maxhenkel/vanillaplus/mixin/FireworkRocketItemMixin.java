@@ -3,16 +3,16 @@ package de.maxhenkel.vanillaplus.mixin;
 import de.maxhenkel.vanillaplus.VanillaPlus;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.FireworkRocketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.Fireworks;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(FireworkRocketItem.class)
 public class FireworkRocketItemMixin extends Item {
 
+    @Unique
     private static final int MIN_DURABILITY = 2;
 
     public FireworkRocketItemMixin(Properties properties) {
@@ -27,7 +28,7 @@ public class FireworkRocketItemMixin extends Item {
     }
 
     @Inject(method = "use", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/FireworkRocketEntity;<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/LivingEntity;)V"), cancellable = true)
-    private void injected(Level level, Player player, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResultHolder<ItemStack>> ci) {
+    private void injected(Level level, Player player, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> ci) {
         if (!VanillaPlus.SERVER_CONFIG.newElytraDurability.get()) {
             return;
         }
@@ -45,14 +46,14 @@ public class FireworkRocketItemMixin extends Item {
         }
 
         ItemStack elytra = player.getItemBySlot(EquipmentSlot.CHEST);
-        if (!(elytra.getItem() instanceof ElytraItem)) {
+        if (!elytra.has(DataComponents.GLIDER)) {
             return;
         }
 
         int durability = elytra.getMaxDamage() - elytra.getDamageValue();
 
         if (durability <= MIN_DURABILITY) {
-            ci.setReturnValue(InteractionResultHolder.pass(player.getItemInHand(interactionHand)));
+            ci.setReturnValue(InteractionResult.PASS);
             return;
         }
 
