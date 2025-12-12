@@ -1,7 +1,7 @@
 package de.maxhenkel.vanillaplus.mixin;
 
 import de.maxhenkel.vanillaplus.VanillaPlus;
-import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
