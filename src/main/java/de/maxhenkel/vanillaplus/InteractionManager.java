@@ -1,7 +1,7 @@
 package de.maxhenkel.vanillaplus;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.minecraft.network.protocol.game.ServerboundInteractPacket;
+import net.minecraft.network.protocol.game.ServerboundAttackPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -45,7 +45,7 @@ public class InteractionManager {
             return;
         }
         lookingAt(player).ifPresent(entity -> {
-            player.connection.handleInteract(ServerboundInteractPacket.createAttackPacket(entity, false));
+            player.connection.handleAttack(new ServerboundAttackPacket(entity.getId()));
         });
     }
 
